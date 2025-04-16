@@ -6,7 +6,7 @@ A modern, responsive web application built with Next.js, React, and Tailwind CSS
 
 - **Modern UI**: Sleek and responsive design using Tailwind CSS
 - **Component-Based Structure**: Well-organized React components 
-- **Fast Development**: Powered by Next.js 15 with Turbopack
+- **Fast Development**: Powered by Next.js 15
 - **Type Safety**: Built with TypeScript
 - **Optimized Performance**: Fast loading and rendering
 - **Clean Code**: Follows best practices with ESLint and Prettier
@@ -56,7 +56,7 @@ UTS_PWEB/
 ├── tailwind.config.ts      # Tailwind CSS configuration
 ├── package.json            # Dependencies and scripts
 ├── tsconfig.json           # TypeScript configuration
-└── next.config.ts          # Next.js configuration
+└── next.config.js          # Next.js configuration
 ```
 
 ## 📦 Main Components
@@ -88,6 +88,40 @@ The application can be deployed on Vercel or any other hosting platform that sup
 npm run build
 npm run start
 ```
+
+### Troubleshooting Deployment Issues
+
+If you encounter errors during the build process, here are some solutions:
+
+1. **Module not defined in ES module scope**: This is typically caused by using ES modules with CommonJS. Convert your config files to use the appropriate module format:
+   - Use `.js` extension for CommonJS modules (e.g., `next.config.js`, `postcss.config.js`)
+   - Use standard `module.exports` syntax instead of ES `export default`
+
+2. **TailwindCSS Error**: If you see an error like "trying to use tailwindcss directly as a PostCSS plugin", update your PostCSS configuration:
+   ```js
+   // postcss.config.js
+   module.exports = {
+     plugins: {
+       '@tailwindcss/postcss': {},
+       autoprefixer: {},
+     },
+   };
+   ```
+
+3. **Permission Issues**: If you encounter permission errors with the `.next` directory, try running with administrator privileges or disable tracing in `next.config.js`:
+   ```js
+   // next.config.js
+   const nextConfig = {
+     // Other settings
+     output: 'standalone',
+     typescript: {
+       ignoreBuildErrors: true,
+     },
+     eslint: {
+       ignoreDuringBuilds: true,
+     },
+   };
+   ```
 
 ## 🧪 Development
 
